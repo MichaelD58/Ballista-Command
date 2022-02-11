@@ -1,7 +1,7 @@
 class City{
-  int x, y, cityWidth , cityHeight ;
+  float x, y, cityWidth , cityHeight ;
   
-  City(int x, int y, int cityWidth, int cityHeight){
+  City(float x, float y, float cityWidth, float cityHeight){
       this.x = x;
       this.y = y;
       this.cityWidth = cityWidth;
@@ -11,6 +11,13 @@ class City{
   void draw() {
     fill(0, 0 , 250) ;
     rect(x, y, cityWidth, cityHeight) ;
+  }
+  
+  boolean checkState(float meteorX, float meteorY){
+    if((meteorX < (x + cityWidth) && meteorX > x) && (meteorY < (y+ cityHeight) && meteorY > y)){
+      return false;
+    }
+    return true;
   }
     
 }

@@ -1,22 +1,19 @@
-class Meteor{
+class Bomb{
   
   public PVector velocity, position, acceleration;
   
-  final float drag = 0.995f;
+  final float drag = 0.9999f;
   
   boolean status;
   
   int invMass;
   
-  float terminalVelocity;
-  
-  Meteor(float x, float y, float vel1, float vel2, int m, float tv){
+  Bomb(float x, float y, float vel1, float vel2, int m){
     velocity = new PVector(vel1, vel2);
     position = new PVector(x, y);
     acceleration= new PVector();
     invMass = m;
     status = true;
-    terminalVelocity = tv;
   }
   
   void integrate(PVector gravity) {
@@ -26,20 +23,12 @@ class Meteor{
     
      acceleration.add(gravity);
      acceleration.mult(invMass); 
-     
-     if(velocity.y <= terminalVelocity){
-      velocity.add(acceleration);
-      velocity.mult(drag);
-     }
     
-    //println(terminalVelocity + " " + velocity.y);
-    
-    if((position.x < 0) || (position.x > width)){
-      velocity.x = -velocity.x ;
-    }
+     velocity.add(acceleration);
+     velocity.mult(drag);
   }
   
-  boolean meteorUsed(){
+  boolean bombUsed(){
     if(position.y > height){
       status = false;
       return false;
@@ -47,5 +36,4 @@ class Meteor{
       return true;
     }
   }
-  
 }
