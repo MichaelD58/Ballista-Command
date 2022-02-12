@@ -8,6 +8,7 @@ class City{
       this.cityHeight = cityHeight;
   }
   
+  
   void draw() {
     fill(0, 0 , 250) ;
     rect(x, y, cityWidth, cityHeight) ;

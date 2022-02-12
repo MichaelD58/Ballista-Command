@@ -1,7 +1,7 @@
 class Ballista{
   float x1, y1, x2, y2, x3, y3;
   
-  int bombCounter;
+  int bombCounter;//Number of bombs the ballista is currently holding
   
   Bomb bomb;
   
@@ -19,6 +19,7 @@ class Ballista{
     fill(0, 250 , 0) ;
     triangle(x1, y1, x2, y2, x3, y3) ;
     textAlign(CENTER);
+    //Check to see if the ballista has ran out of bombs, if so count colour will be red
     if (bombCounter > 0){
       fill(255);
     }else{
@@ -31,12 +32,12 @@ class Ballista{
     //http://www.jeffreythompson.org/collision-detection/tri-point.php
     float actualArea = abs( (x2-x1)*(y3-y1) - (x3-x1)*(y2-y1) );
     
-    float area1 =    abs( (x1-meteorX)*(y2-meteorY) - (x2-meteorX)*(y1-meteorY) );
-    float area2 =    abs( (x2-meteorX)*(y3-meteorY) - (x3-meteorX)*(y2-meteorY) );
-    float area3 =    abs( (x3-meteorX)*(y1-meteorY) - (x1-meteorX)*(y3-meteorY) );
+    float area1 = abs( (x1-meteorX)*(y2-meteorY) - (x2-meteorX)*(y1-meteorY) );
+    float area2 = abs( (x2-meteorX)*(y3-meteorY) - (x3-meteorX)*(y2-meteorY) );
+    float area3 = abs( (x3-meteorX)*(y1-meteorY) - (x1-meteorX)*(y3-meteorY) );
   
     if (area1 + area2 + area3 == actualArea) {
-    return false;
+      return false;
     }
   
     return true;
