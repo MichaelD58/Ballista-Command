@@ -44,18 +44,44 @@ void bombHandling(){
       PVector position = bombs[i].position;
       bombs[i].integrate(gravityMain);
       
-      if(bombs[i].detonated()){
-        if(explosions[i] < 35){
-          noStroke();
-          fill(255,67,27);
-          circle(bombs[i].position.x, bombs[i].position.y,explosions[i]);
-          explosions[i]++;
+      //if(bombs[i].detonated()){
+      //  if(explosions[i] < 35){
+      //    noStroke();
+      //    fill(255,67,27);
+      //    circle(bombs[i].position.x, bombs[i].position.y,explosions[i]);
+      //    explosions[i]++;
+      //  }
+      //}else{
+        if(bombs[i].status == false){
+          fill(250);
+          circle(position.x,position.y,5);
         }
-      }else{
-        fill(250);
-        circle(position.x,position.y,5);
-      }
+        
+      //}
     }
     i++;
   }
+ }
+ 
+ void explosionCheck(){
+   
+   if(keyPressed == true && key == ' '){
+     int count = frameCount;
+     for(int i = 0; i < bombs.length; i++){
+       while(bombs[i] != null){
+         if(!bombs[i].status){
+           PVector position = bombs[i].position;
+           if(frameCount == count + 30){
+               if(explosions[i] < 35){
+                  noStroke();
+                  fill(255,67,27);
+                  circle(bombs[i].position.x, bombs[i].position.y,explosions[i]);
+                  explosions[i]++;
+              }
+           }
+         }
+       }
+     }
+   }
+   
  }

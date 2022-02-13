@@ -75,6 +75,7 @@ void draw() {
     enemyCount = 0;
     crosshair();//Crosshair details are drawn
     bombHandling();
+    explosionCheck();
     
     textAlign(CENTER);
     textSize(20);

@@ -60,7 +60,6 @@ void waveStatusCheck() {
     for (int i=0; i < explosions.length; i++) {
       bombs[i] = null;
       explosions[i] = 1;
-      println(explosions[i]);
     }
     
   }else if(s == state.lost){
