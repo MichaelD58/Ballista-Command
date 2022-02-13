@@ -4,7 +4,8 @@ class Bomb{
   
   final float drag = 0.995f;
   
-  boolean status;
+  boolean status,
+          active;
   
   int invMass;
   
@@ -14,6 +15,7 @@ class Bomb{
     acceleration= new PVector();
     invMass = m;
     status = false;
+    active = false;
   }
   
   void integrate(PVector gravity) {
@@ -27,24 +29,5 @@ class Bomb{
      velocity.add(acceleration);
      velocity.mult(drag);
   }
-  
-  //boolean bombUsed(){
-  //  if(position.y > height){
-  //    status = false;
-  //    return false;
-  //  }else{
-  //    return true;
-  //  }
-  //}
-  
- boolean detonated(){
-    if(status){
-      return true;
-    }else if(keyPressed == true && key == ' '){
-      status = true;
-      return true;
-    }else{
-      return false;
-    }
-  }
+ 
 }

@@ -74,8 +74,8 @@ void draw() {
     waveStatusCheck();
     enemyCount = 0;
     crosshair();//Crosshair details are drawn
-    bombHandling();
-    explosionCheck();
+    bombMovement();
+    bombSetOffCheck();
     
     textAlign(CENTER);
     textSize(20);

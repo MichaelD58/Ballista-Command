@@ -36,52 +36,55 @@ void fireBomb(int x, int y, int chosenBallista){
   bombs[bombsInPlay++] = ballistae[chosenBallista].bomb;
 }
 
-void bombHandling(){
-  int i=0;
+void bombMovement(){
   
-  while(i < 30 && bombs[i] != null){
-    if( bombsInPlay < 31){
-      PVector position = bombs[i].position;
-      bombs[i].integrate(gravityMain);
+  for(int i = 0; i<bombs.length; i++){
+      if(bombs[i] != null && !(bombs[i].status)){
+          PVector position = bombs[i].position;
+          bombs[i].integrate(gravityMain);
       
-      //if(bombs[i].detonated()){
-      //  if(explosions[i] < 35){
-      //    noStroke();
-      //    fill(255,67,27);
-      //    circle(bombs[i].position.x, bombs[i].position.y,explosions[i]);
-      //    explosions[i]++;
-      //  }
-      //}else{
-        if(bombs[i].status == false){
-          fill(250);
-          circle(position.x,position.y,5);
-        }
+          if(explosions[i] == 1){
+            fill(250);
+            circle(position.x,position.y,5);
+          }  
         
-      //}
     }
-    i++;
   }
+
  }
  
- void explosionCheck(){
-   
+ void bombSetOffCheck(){
+  
    if(keyPressed == true && key == ' '){
-     int count = frameCount;
      for(int i = 0; i < bombs.length; i++){
-       while(bombs[i] != null){
-         if(!bombs[i].status){
-           PVector position = bombs[i].position;
-           if(frameCount == count + 30){
-               if(explosions[i] < 35){
-                  noStroke();
-                  fill(255,67,27);
-                  circle(bombs[i].position.x, bombs[i].position.y,explosions[i]);
-                  explosions[i]++;
-              }
-           }
-         }
+       if(bombs[i] != null && (!bombs[i].status)){
+           bombs[i].active = true;
        }
      }
    }
    
+   for(int i = 0; i < bombs.length; i++){
+     if(bombs[i] != null && bombs[i].active){
+       if(i == 0){ 
+           if(explosions[i] < 35){
+             explode(i);
+           }
+       }else if(explosions[i - 1] >= 20 ){
+           explode(i);
+       }
+     }
+   }
+
  }
+ 
+void explode(int i){
+  if(explosions[i] < 35){
+     noStroke();
+     fill(255,67,27);
+     circle(bombs[i].position.x, bombs[i].position.y,explosions[i]);
+     explosions[i]++;
+  }else{
+     bombs[i].status = true;
+     bombs[i].active = false;
+  }
+}
