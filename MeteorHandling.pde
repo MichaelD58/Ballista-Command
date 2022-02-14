@@ -51,7 +51,6 @@ void explodeMeteor(int i){
        noStroke();
        fill(255,67,27);
        circle(meteors[i].position.x, meteors[i].position.y, 35);
-       println("hello" + meteorExplosions[i]);
      
       for (int j=0; j<meteors.length; j++) {
         if(meteorState[j] && explosionTouchingMeteors(j, i)){

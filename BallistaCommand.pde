@@ -1,4 +1,5 @@
 void setup() {
+  frameRate(30);
   size(1000, 700);
   noCursor(); //Dont want the cursor appearing when playing the game
   reset();//Calls the reset function which initialises many of the game's variables as well as begins the game
