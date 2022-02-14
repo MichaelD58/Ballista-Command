@@ -32,7 +32,7 @@ void fireBomb(int x, int y, int chosenBallista) {
     }
   }
 
-  ballistae[chosenBallista].createBomb((ballistae[chosenBallista].x2 + ballistae[chosenBallista].x3)/2, ballistae[chosenBallista].y1, (float)((x - ballistae[chosenBallista].x1)/175), (float)-y/140, 1);
+  ballistae[chosenBallista].createBomb((ballistae[chosenBallista].x2 + ballistae[chosenBallista].x3)/2, ballistae[chosenBallista].y1, (float)((x - ballistae[chosenBallista].x1)/150), (float)-y/130, 1);
   bombs[bombsInPlay++] = ballistae[chosenBallista].bomb;
 }
 
