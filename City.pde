@@ -15,7 +15,7 @@ class City{
   }
   
   boolean checkState(float meteorX, float meteorY){
-    if((meteorX < (x + cityWidth) && meteorX > x) && (meteorY < (y+ cityHeight) && meteorY > y)){
+    if((meteorX < (x + cityWidth + 9) && meteorX > x - 9) && (meteorY < (y+ cityHeight) && meteorY > y)){
       return false;
     }
     return true;

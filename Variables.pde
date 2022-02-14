@@ -9,7 +9,8 @@ int screenView = menuScreen,//Used to track the current screen the game is viewi
   bombsInPlay,//Bombs currently in flight
   citiesRevived,
   time,
-  explosions[];
+  explosions[],
+  meteorExplosions[];
 
 //State arrays used to store if the objects in the names are alive or dead (true or false)
 boolean cityState[],

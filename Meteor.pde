@@ -3,9 +3,7 @@ class Meteor{
   public PVector velocity, position, acceleration;
   
   final float drag = 0.995f;
-  
-  boolean status;
-  
+    
   int invMass;
   
   float terminalVelocity;
@@ -15,7 +13,6 @@ class Meteor{
     position = new PVector(x, y);
     acceleration= new PVector();
     invMass = m;
-    status = true;
     terminalVelocity = tv;
   }
   
@@ -36,15 +33,6 @@ class Meteor{
     
     if((position.x < 0) || (position.x > width)){
       velocity.x = -velocity.x ;
-    }
-  }
-  
-  boolean meteorUsed(){
-    if(position.y > height){
-      status = false;
-      return false;
-    }else{
-      return true;
     }
   }
   

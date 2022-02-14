@@ -10,6 +10,7 @@ void reset() {
   wave = 0;
   enemyCount = 0;
   gravityMain = new PVector(0, height/18000000f);
+  bombsInPlay = 0;
   
   bombs = new Bomb[30];
   explosions = new int[30];

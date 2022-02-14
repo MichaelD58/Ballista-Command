@@ -5,6 +5,7 @@ void waveStatusCheck() {
   if (s == state.won) {
     int aliveCityCount = 0;
     int bombCount = 0;
+    int multiplier = scoreMultiplier();
     
     for(int i=0;i<cityState.length;i++){
       if(cityState[i] == true)
@@ -16,25 +17,8 @@ void waveStatusCheck() {
         bombCount += ballistae[i].bombCounter;
     }
         
-    if(wave < 3){
-       score+= aliveCityCount * 100;
-       score+= bombCount * 5;
-    }else if(wave < 5){
-       score+= aliveCityCount * 200;
-       score+= bombCount * 10;
-    }else if(wave < 7){
-       score+= aliveCityCount * 300;
-       score+= bombCount * 15;
-    }else if(wave < 9){
-       score+= aliveCityCount * 400;
-       score+= bombCount * 20;
-    }else if(wave < 11){
-       score+= aliveCityCount * 500;
-       score+= bombCount * 25;
-    }else{
-       score+= aliveCityCount * 600;
-       score+= bombCount * 30;
-    }
+    score+= aliveCityCount * (100 * multiplier);
+    score+= bombCount * (5 * multiplier);
     
     if(score >= 10000){
       for(int i=0; i<cityState.length; i++)
