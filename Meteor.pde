@@ -8,12 +8,15 @@ class Meteor{
   
   float terminalVelocity;
   
+  boolean exploding;
+  
   Meteor(float x, float y, float vel1, float vel2, int m, float tv){
     velocity = new PVector(vel1, vel2);
     position = new PVector(x, y);
     acceleration= new PVector();
     invMass = m;
     terminalVelocity = tv;
+    exploding = false;
   }
   
   void integrate(PVector gravity) {
@@ -28,8 +31,6 @@ class Meteor{
       velocity.add(acceleration);
       velocity.mult(drag);
      }
-    
-    //println(terminalVelocity + " " + velocity.y);
     
     if((position.x < 0) || (position.x > width)){
       velocity.x = -velocity.x ;

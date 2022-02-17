@@ -32,7 +32,7 @@ void fireBomb(int x, int y, int chosenBallista) {
     }
   }
 
-  ballistae[chosenBallista].createBomb((ballistae[chosenBallista].x2 + ballistae[chosenBallista].x3)/2, ballistae[chosenBallista].y1, (float)((x - ballistae[chosenBallista].x1)/150), (float)-y/130, 1);
+  ballistae[chosenBallista].createBomb((ballistae[chosenBallista].x2 + ballistae[chosenBallista].x3)/2, ballistae[chosenBallista].y1, (float)((x - ballistae[chosenBallista].x1)/130), (float)-y/120, 1);
   bombs[bombsInPlay++] = ballistae[chosenBallista].bomb;
 }
 
@@ -76,7 +76,7 @@ void bombSetOffCheck() {
 
 void explode(int i) {
 
-  if (explosions[i] < 35) {
+  if (explosions[i] < 60) {
     noStroke();
     fill(255, 67, 27);
     circle(bombs[i].position.x, bombs[i].position.y, explosions[i]);
@@ -84,12 +84,12 @@ void explode(int i) {
     for (int j=0; j<meteors.length; j++) {
       if (meteorState[j] && explosionTouching(j, i)) {
         meteorState[j] = false;
+        meteors[j].exploding = true;
         score += (25 * scoreMultiplier());
-        explodeMeteor(j);
       }
     }
 
-    explosions[i]++;
+    explosions[i]+=2;
   } else {
     bombs[i].status = true;
     bombs[i].active = false;
@@ -97,8 +97,8 @@ void explode(int i) {
 }
 
 boolean explosionTouching(int j, int i) {
-  if ((meteors[j].position.x <= bombs[i].position.x + explosions[i]) && (meteors[j].position.x >= bombs[i].position.x - explosions[i])) {
-    if ((meteors[j].position.y <= bombs[i].position.y + explosions[i]) && (meteors[j].position.y >= bombs[i].position.y - explosions[i])) {
+  if ((meteors[j].position.x <= bombs[i].position.x + explosions[i]- 5) && (meteors[j].position.x >= bombs[i].position.x - explosions[i] - 5)) {
+    if ((meteors[j].position.y <= bombs[i].position.y + explosions[i] - 5) && (meteors[j].position.y >= bombs[i].position.y - explosions[i] - 5)) {
       return true;
     }
   }

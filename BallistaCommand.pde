@@ -78,6 +78,7 @@ void draw() {
     crosshair();//Crosshair details are drawn
     bombMovement();
     bombSetOffCheck();
+    explodeMeteorCheck();
     
     textAlign(CENTER);
     textSize(20);
