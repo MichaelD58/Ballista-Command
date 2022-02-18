@@ -56,6 +56,8 @@ void bombSetOffCheck() {
   if (keyPressed == true && key == ' ') {
     for (int i = 0; i < bombs.length; i++) {
       if (bombs[i] != null && (!bombs[i].status)) {
+        ///ASK BUDDY
+        //bombs[i].status = true;
         bombs[i].active = true;
       }
     }
@@ -88,6 +90,12 @@ void explode(int i) {
         score += (25 * scoreMultiplier());
       }
     }
+    
+    if(wave > 1 && additionalEnemy.status && explosionTouchingAdditionalEnemy(i)){
+        additionalEnemy.status = false;
+        additionalEnemy.exploding = true;
+        score += (100 * scoreMultiplier());
+    }
 
     explosions[i]+=2;
   } else {
@@ -97,8 +105,8 @@ void explode(int i) {
 }
 
 boolean explosionTouching(int j, int i) {
-  if ((meteors[j].position.x <= bombs[i].position.x + explosions[i]- 5) && (meteors[j].position.x >= bombs[i].position.x - explosions[i] - 5)) {
-    if ((meteors[j].position.y <= bombs[i].position.y + explosions[i] - 5) && (meteors[j].position.y >= bombs[i].position.y - explosions[i] - 5)) {
+  if ((meteors[j].position.x <= bombs[i].position.x + explosions[i]- 10) && (meteors[j].position.x >= bombs[i].position.x - explosions[i] + 10)) {
+    if ((meteors[j].position.y <= bombs[i].position.y + explosions[i] - 10) && (meteors[j].position.y >= bombs[i].position.y - explosions[i] + 10)) {
       return true;
     }
   }

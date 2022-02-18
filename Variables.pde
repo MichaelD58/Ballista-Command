@@ -28,12 +28,12 @@ Bomb bombs[];
 
 PFont atari;//Font used for the game
 
-PVector gravityMain;
-
-float velocity;
+PVector gravityMain;//Constant used for gravity for this game
 
 enum state {
   ongoing,
   won,
   lost
 }
+
+AdditionalEnemy additionalEnemy;

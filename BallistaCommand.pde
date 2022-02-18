@@ -5,12 +5,14 @@ void setup() {
   reset();//Calls the reset function which initialises many of the game's variables as well as begins the game
 }
 
-//Method to initialise many of the game's variables
+/**
+* Method to initialise many of the game's variable
+*/
 void reset() {
   score = 0;
   wave = 0;
-  enemyCount = 0;
-  gravityMain = new PVector(0, height/18000000f);
+  enemyCount = 0;//Numbers of meteors in play
+  gravityMain = new PVector(0, height/18000000f);//Constant for the impact of gravity
   bombsInPlay = 0;
   
   bombs = new Bomb[30];
@@ -18,8 +20,6 @@ void reset() {
   for(int i = 0; i < explosions.length; i++){
     explosions[i] = 1;
   }
-  
-  addMeteors();
   
   //Array of cities is initialised along with the array used to store the state of each city
   cities = new City[6];
@@ -36,7 +36,9 @@ void reset() {
   for (int i=0; i<ballistaState.length; i++) {
     ballistaState[i]=true;
   }
-  createBallistae();
+  
+  addMeteors();//First round is started by generating new meteors
+  createBallistae();//Method is called to initialise the first wave's ballistae
   
 }
 
@@ -49,18 +51,20 @@ void draw() {
   //Check to see if the game is to be shown
   if(screenView == gameScreen){
     
-    for (int i=0; i < meteors.length; i++) {
-      removeMeteorCheck();
+    //For every meteor
+   for (int i=0; i < meteors.length; i++) {
+      removeMeteorCheck();//Check to see if meteor is out of bounds
       PVector position = meteors[i].position;
-      if (meteorState[i] == true) {
-        meteors[i].integrate(gravityMain);
+      if (meteorState[i]){//Check to see if meteor is still active
+        meteors[i].integrate(gravityMain);//Meteor's integrate function is called
         fill(145, 49, 42);
-        circle(position.x, position.y, 10);
+        circle(position.x, position.y, 10);//Visual representation of the meteor is displayed
       }
       drawCities(position.x, position.y);//Function to draw the cities and check for meteor collision
       drawBallistae(position.x,position.y);//Function to draw the ballistae and check for meteor collision
     }
     
+    //For loop used to acquire a count of every meteor which has as active state (true)
     for (int i=0; i <meteorState.length; i++) {
       if (meteorState[i] == true) {
         enemyCount++;
@@ -70,15 +74,14 @@ void draw() {
     textAlign(LEFT);
     fill(240, 196, 32);
     text("Score:" + (score + (citiesRevived * cityReviveCost)), 5, 25);//User's score
-    text("Wave:"+wave, (width/2)-65, 25);//Wave number
+    text("Wave:"+ wave, (width/2)-65, 25);//Wave number
     text("Meteors left:"+ enemyCount, width-290, 25);//Meteors left in wave
 
-    waveStatusCheck();
-    enemyCount = 0;
-    crosshair();//Crosshair details are drawn
+    waveStatusCheck();//Check to see what the current state of the wave is
     bombMovement();
     bombSetOffCheck();
     explodeMeteorCheck();
+    
     
     textAlign(CENTER);
     textSize(20);
@@ -93,6 +96,17 @@ void draw() {
       }
     }
     
+    if(wave > 1){
+      if(enemyCount == 0){
+        addAdditionalEnemy(); 
+      }
+      additionalEnemyMovement();
+      explodeAdditionalEnemyCheck();
+      additionalEnemyFireMeteor();
+    }
+    
+    enemyCount = 0;//Active meteor count is set back to 0 so that it can be refreshed with each frame
+    crosshair();//Crosshair details are drawn
   }
   
   //Check to see if the menu is to be shown

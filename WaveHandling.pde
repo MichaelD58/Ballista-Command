@@ -1,5 +1,5 @@
 void waveStatusCheck() {
-  state s = waveStatusCheckCondition();
+  state s = waveStatusCheckCondition();//State of current city is acquired
   
   //Successful wave ended 
   if (s == state.won) {
@@ -70,23 +70,32 @@ void waveStatusCheck() {
   }
 }
 
+/**
+* Checks to see what the current status of the wave is.
+*
+* @param cityAlive Used to track if an alive city (true) is within the cityState array.
+* @return the state of the wave. Won if cityAlive, but  every !(meteorState[]). Ongoing if 
+* cityAlive and at least one meteorState[]. Lost if !cityAlive.
+*/
 state waveStatusCheckCondition() {
-  boolean cityAlive = false;
+  boolean cityAlive = false;//Used to see if there is an alive city remaining
 
+  //Loops through every boolean in cityState, checking for a true
   for (int i=0; i < cityState.length; i++) {
-    if (cityState[i] == true) {
-      cityAlive= true;
+    if (cityState[i]) {//Alive city found
+      cityAlive= true;//Alive city tracker set to true
     }
   }
 
-  if (cityAlive) {
+  if (cityAlive) {//If there is a city alive
+    //Loops through every boolean in the meteorState array to see if a meteor is still active
     for (int i=0; i<meteorState.length; i++) {
-      if (meteorState[i]==true) {
-        return state.ongoing;
+      if (meteorState[i]) {//Active meteor found
+        return state.ongoing;//Meteors still on the go, so wave is ongoing
       }
     }
-    return state.won;
+    return state.won;//No meteors on the go, but a city is alive, so wave has been won
   }else{
-    return state.lost;
+    return state.lost;//No cities alive, so wave has been lost
   }
 }

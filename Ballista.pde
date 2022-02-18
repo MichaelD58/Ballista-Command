@@ -1,5 +1,5 @@
 class Ballista{
-  float x1, y1, x2, y2, x3, y3;
+  float x1, y1, x2, y2, x3, y3;//Six coordinates for the triangle's three points
   
   int bombCounter;//Number of bombs the ballista is currently holding
   
@@ -12,7 +12,7 @@ class Ballista{
     this.y2 = y2;
     this.x3 = x3;
     this.y3 = y3;
-    bombCounter = 10;
+    bombCounter = 10;//Bomb counter is set to 10 - the default for round start
   }
   
   void draw() {
@@ -28,6 +28,13 @@ class Ballista{
     text(bombCounter,((x2+x3)/2),(y1+height + 27)/2); 
   }
   
+  /**
+  * Check to see if current meteor looked at is within the bounds of the ballista using Heron's formula
+  *
+  * @param  x a float of the x coordinate of a meteor
+  * @param  y a float of the y coordinate of a meteor
+  * @return a boolean value representing if the ballista is still active or not
+  */
   boolean checkState(float meteorX, float meteorY){
     //http://www.jeffreythompson.org/collision-detection/tri-point.php
     float actualArea = abs( (x2-x1)*(y3-y1) - (x3-x1)*(y2-y1) );
