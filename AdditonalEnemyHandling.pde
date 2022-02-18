@@ -4,7 +4,6 @@ void addAdditionalEnemy(){
   int rdmGeneratorObject = (Math.random() <= 0.5) ? 1 : 2;
   
   float startY = 0 + ((wave - 1) * 50);
-  
   if(startY > 500){
     startY = 500;
   }
@@ -24,24 +23,24 @@ void addAdditionalEnemy(){
 void additionalEnemyMovement(){
   additionalEnemy.integrate();
   additionalEnemy.draw();
-  
 }
 
 boolean explosionTouchingAdditionalEnemy(int i) {
   if(additionalEnemy.type == 1){
     if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]- 5) && (additionalEnemy.position.x >= bombs[i].position.x - explosions[i] - 5)) {
       if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i] - 5) && (additionalEnemy.position.y >= bombs[i].position.y - explosions[i] - 5)) {
+        additionalEnemy.status = false;
         return true;
       }
     }
   }else{
     if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]- 5) && (additionalEnemy.position.x + 50 >= bombs[i].position.x - explosions[i] - 5)) {
       if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i] - 5) && (additionalEnemy.position.y + 20 >= bombs[i].position.y - explosions[i] - 5)) {
+        additionalEnemy.status = false;
         return true;
       }
     }
   }
-  
   return false;
 }
 
@@ -63,7 +62,7 @@ void explodeAdditionalEnemyCheck(){
               score += (25 * scoreMultiplier());
             }
           }
-          
+
           additionalEnemy.explodingCounter+=2;
       }else{
        additionalEnemy.exploding = false;
@@ -73,15 +72,17 @@ void explodeAdditionalEnemyCheck(){
 }
 
 void additionalEnemyFireMeteor(){ 
-  for(int i = 0; i< additionalEnemy.fireAtX.length; i++){
-    if(additionalEnemy.position.x == additionalEnemy.fireAtX[i]){
-      for(int j = 0; j < meteorState.length; j++){
-        if(!meteorState[j]){
-           meteors[j] = new Meteor(additionalEnemy.position.x, additionalEnemy.position.y, random(0, 3), 1, 1, 3);
-           meteorState[j] = true;
-           break;
+  if(additionalEnemy.status){
+    for(int i = 0; i< additionalEnemy.fireAtX.length; i++){
+      if(additionalEnemy.position.x == additionalEnemy.fireAtX[i]){
+        for(int j = 0; j < meteorState.length; j++){
+          if(!meteorState[j]){
+             meteors[j] = new Meteor(additionalEnemy.position.x, additionalEnemy.position.y, random(0, 3), 1, 1, 3);
+             meteorState[j] = true;
+             break;
+          }
         }
       }
     }
-  }
+  } 
 }
