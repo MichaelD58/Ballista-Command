@@ -1,3 +1,8 @@
+/**
+* Acquires the score multiplier for the wave
+*
+* @return multipler Integer that will be used to multiply the score by
+*/
 int scoreMultiplier(){
    int multiplier = 1;
  

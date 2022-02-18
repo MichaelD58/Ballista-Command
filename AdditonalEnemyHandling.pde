@@ -27,15 +27,15 @@ void additionalEnemyMovement(){
 
 boolean explosionTouchingAdditionalEnemy(int i) {
   if(additionalEnemy.type == 1){
-    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]- 5) && (additionalEnemy.position.x >= bombs[i].position.x - explosions[i] - 5)) {
-      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i] - 5) && (additionalEnemy.position.y >= bombs[i].position.y - explosions[i] - 5)) {
+    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]) && (additionalEnemy.position.x >= bombs[i].position.x - explosions[i])) {
+      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i]) && (additionalEnemy.position.y >= bombs[i].position.y - explosions[i])) {
         additionalEnemy.status = false;
         return true;
       }
     }
   }else{
-    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]- 5) && (additionalEnemy.position.x + 50 >= bombs[i].position.x - explosions[i] - 5)) {
-      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i] - 5) && (additionalEnemy.position.y + 20 >= bombs[i].position.y - explosions[i] - 5)) {
+    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]) && (additionalEnemy.position.x + 50 >= bombs[i].position.x - explosions[i])) {
+      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i]) && (additionalEnemy.position.y + 20 >= bombs[i].position.y - explosions[i])) {
         additionalEnemy.status = false;
         return true;
       }
@@ -77,8 +77,9 @@ void additionalEnemyFireMeteor(){
       if(additionalEnemy.position.x == additionalEnemy.fireAtX[i]){
         for(int j = 0; j < meteorState.length; j++){
           if(!meteorState[j]){
-             meteors[j] = new Meteor(additionalEnemy.position.x, additionalEnemy.position.y, random(0, 3), 1, 1, 3);
+             meteors[j] = new Meteor(additionalEnemy.position.x, additionalEnemy.position.y, random(0, 3), 1, 1, terminalVelocity);
              meteorState[j] = true;
+             meteorExplosions[j] = 1;
              break;
           }
         }

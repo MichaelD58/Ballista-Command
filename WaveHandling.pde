@@ -1,3 +1,11 @@
+/**
+* Checks to see if wave has been won or lost and handles game accordingly. 
+* If wave has been won then the score is increased by the number of cities still alive and the number of bombs left over.
+* A check is carried out to see if a city should and can be revived before the next wave of meteors
+* are spawned through a method call and the ballistae are rest.
+* If the wave has been lost then the game over message is displayed along with the wave number and the
+* player's final score.
+*/
 void waveStatusCheck() {
   state s = waveStatusCheckCondition();//State of current city is acquired
   
@@ -8,12 +16,12 @@ void waveStatusCheck() {
     int multiplier = scoreMultiplier();
     
     for(int i=0;i<cityState.length;i++){
-      if(cityState[i] == true)
+      if(cityState[i])
         aliveCityCount++;
     }
     
     for(int i=0;i<ballistae.length;i++){
-      if(ballistaState[i] == true)
+      if(ballistaState[i])
         bombCount += ballistae[i].bombCounter;
     }
         

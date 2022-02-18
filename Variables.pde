@@ -7,8 +7,8 @@ int screenView = menuScreen,//Used to track the current screen the game is viewi
   wave,
   enemyCount,//Meteors left in the wave
   bombsInPlay,//Bombs currently in flight
-  citiesRevived,
-  time,
+  citiesRevived, //Number of cities revived in a game
+  time,//Time at which a city is revived at
   explosions[],
   meteorExplosions[];
 
@@ -28,9 +28,11 @@ Bomb bombs[];
 
 PFont atari;//Font used for the game
 
-PVector gravityMain;//Constant used for gravity for this game
+PVector gravityMain;//Constant for the impact of gravity
 
-enum state {
+float terminalVelocity;//Max Y velocity that metoers can reach in a given round
+
+enum state {//Three possible states for a wave
   ongoing,
   won,
   lost

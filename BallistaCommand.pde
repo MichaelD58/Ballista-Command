@@ -12,9 +12,10 @@ void reset() {
   score = 0;
   wave = 0;
   enemyCount = 0;//Numbers of meteors in play
-  gravityMain = new PVector(0, height/18000000f);//Constant for the impact of gravity
+  gravityMain = new PVector(0, height/18000000f);////Value used for the constant of gravity
   bombsInPlay = 0;
   
+  //Array of bombs is initialised along with the array used to store the explosion size of each bomb
   bombs = new Bomb[30];
   explosions = new int[30];
   for(int i = 0; i < explosions.length; i++){
@@ -54,7 +55,7 @@ void draw() {
     //For every meteor
    for (int i=0; i < meteors.length; i++) {
       removeMeteorCheck();//Check to see if meteor is out of bounds
-      PVector position = meteors[i].position;
+      PVector position = meteors[i].position;//Gets current meteor's position
       if (meteorState[i]){//Check to see if meteor is still active
         meteors[i].integrate(gravityMain);//Meteor's integrate function is called
         fill(145, 49, 42);
@@ -86,13 +87,15 @@ void draw() {
     textAlign(CENTER);
     textSize(20);
     
+    //If a city has been recently revived
     if(cityRevived){
       fill(240, 196, 32);
       
+      //If <= two seconds have passed since the city was revived
       if( millis() < time + 2000){
-        text("City Rebuilt!", width/2, 200);
+        text("City Rebuilt!", width/2, 200);//City revived message is displayed
       }else{
-        cityRevived = false;
+        cityRevived = false;//Recent city revival has ended
       }
     }
     
@@ -103,6 +106,7 @@ void draw() {
       additionalEnemyMovement();
       explodeAdditionalEnemyCheck();
       additionalEnemyFireMeteor();
+      split();
     }
     
     enemyCount = 0;//Active meteor count is set back to 0 so that it can be refreshed with each frame
@@ -126,11 +130,4 @@ void draw() {
       screenView = gameScreen;
     }
   }
-}
-
-//Crosshair draw details
-void crosshair() {
-  stroke(250);
-  line(mouseX-4, mouseY-4, mouseX+4, mouseY+4);
-  line(mouseX+4, mouseY-4, mouseX-4, mouseY+4);
 }

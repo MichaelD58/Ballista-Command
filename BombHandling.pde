@@ -56,8 +56,6 @@ void bombSetOffCheck() {
   if (keyPressed == true && key == ' ') {
     for (int i = 0; i < bombs.length; i++) {
       if (bombs[i] != null && (!bombs[i].status)) {
-        ///ASK BUDDY
-        //bombs[i].status = true;
         bombs[i].active = true;
       }
     }
@@ -66,10 +64,12 @@ void bombSetOffCheck() {
   for (int i = 0; i < bombs.length; i++) {
     if (bombs[i] != null && bombs[i].active) {
       if (i == 0) {
-        if (explosions[i] < 35) {
+        if (explosions[i] < 60) {
+          bombs[i].status = true;
           explode(i);
         }
       } else if (explosions[i - 1] >= 20 ) {
+        bombs[i].status = true;
         explode(i);
       }
     }
@@ -99,7 +99,6 @@ void explode(int i) {
 
     explosions[i]+=2;
   } else {
-    bombs[i].status = true;
     bombs[i].active = false;
   }
 }

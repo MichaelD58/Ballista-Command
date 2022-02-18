@@ -4,11 +4,14 @@ class Meteor{
   
   final float drag = 0.995f;//Pre-defined constant representing drag
     
-  int invMass;//The mass of the meteor
+  int invMass;//The iMass of the meteor
   
   float terminalVelocity;//Float used to store the top Y velocity that a meteor can reach
   
   boolean exploding;
+  
+  int split,
+      splitY;
   
   Meteor(float x, float y, float vel1, float vel2, int m, float tv){
     velocity = new PVector(vel1, vel2);
@@ -17,6 +20,8 @@ class Meteor{
     invMass = m;
     terminalVelocity = tv;
     exploding = false;
+    split = (int) (Math.random()*(9)) + 1;
+    splitY = (int)random(0, height);
   }
   
   /**

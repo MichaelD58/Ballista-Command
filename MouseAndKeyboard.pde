@@ -1,3 +1,12 @@
+/**
+* The details for the drawing of the crosshair
+*/
+void crosshair() {
+  stroke(250);
+  line(mouseX-4, mouseY-4, mouseX+4, mouseY+4);
+  line(mouseX+4, mouseY-4, mouseX-4, mouseY+4);
+}
+
 void keyPressed(){
   if(screenView == gameScreen){
     if(keyPressed == true && (key == 'z' || key == 'x' || key == 'c')){

@@ -11,7 +11,7 @@ void addMeteors() {
   int previousCount;//Integer used to store the number of meteors in the wave before
   //Checks to see if the meteors array was initialised previously, getting its size. If it has
   //not been initialised before (wave 1), then the previous count is set to 4.
-  if(meteors == null){
+  if(wave == 1){
     previousCount = 4;
   }else{
     previousCount = meteors.length;
@@ -22,7 +22,7 @@ void addMeteors() {
   meteorState = new boolean[meteorCount];//Array of meteor's states is initialised
   meteorExplosions = new int[meteorCount];//Array of meteor's explosion counter is initialised
   
-  float terminalVelocity = 0.9 + ((float)wave/10);//Terminal velocity of the meteors is acquired
+  terminalVelocity = 0.9 + ((float)wave/10);//Terminal velocity of the meteors is acquired
   
   //For every meteor in the meteors array
   for (int i=0; i<meteors.length; i++) {
@@ -92,4 +92,24 @@ boolean explosionTouchingMeteors(int j){
  }
  
  return false;
+}
+
+void split(){ 
+  int counter = 0;
+      
+   for(int i = 0; i< meteors.length; i++){
+     if(meteorState[i] && meteors[i].split == 1 && ((int)meteors[i].position.y == meteors[i].splitY)){
+       for(int j = 0; j < meteorState.length; j++){
+         if(!meteorState[j]){
+            meteorState[i] = false;
+            meteors[j] = new Meteor(meteors[i].position.x, meteors[i].position.y, random(0, 3), 1, 1, terminalVelocity);
+            meteorState[j] = true;
+            meteorExplosions[j] = 1;
+         }
+         if(counter == 3){
+           break;
+         }
+       }
+     }
+   }
 }
