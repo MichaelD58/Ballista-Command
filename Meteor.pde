@@ -8,7 +8,7 @@ class Meteor{
   
   float terminalVelocity;//Float used to store the top Y velocity that a meteor can reach
   
-  boolean exploding;
+  boolean exploding;//Boolean to track if the meteor is to explode
   
   int split,
       splitY;

@@ -49,31 +49,58 @@ void removeMeteorCheck() {
   }
 }
 
+/**
+  * Check to see if a meteor is still to explode, continuing to draw the growing explosion if so. There is also a series of checks
+  * to see if the meteor's explosion is colliding with both other meteors and the additional enemies. If collisions are detected, then
+  * the thing being collided with is set to explode and the score is increased accordingly
+  *
+  * @param i an integer for the index of the meteor which explosion is being dealt with
+  */
 void explodeMeteorCheck(){
   for(int i = 0; i < meteors.length; i++){
     if(meteors[i].exploding){
+      //If meteor has not fully exploded
       if(meteorExplosions[i] < 60){
           noStroke();
           fill(255,67,27);
-          circle(meteors[i].position.x, meteors[i].position.y, meteorExplosions[i]);
+          circle(meteors[i].position.x, meteors[i].position.y, meteorExplosions[i]);//Explosion is drawn
      
+          //Check with every meteor to see if it is colliding with the meteor's explosion 
           for (int j=0; j<meteors.length; j++) {
             if(meteorState[j] && explosionTouchingMeteors(j, i)){
-              meteorState[j] = false;
-              meteors[j].exploding = true;
+              meteorState[j] = false;//Meteor state set to false as it has been exploded
+              meteors[j].exploding = true;//Meteor explosion state activated
               score += (25 * scoreMultiplier());
+              meteorExploded.play();
+              meteorExploded.rewind();
             }
+          }
+          
+          //Check with the additional enemy to see if it is colliding with the meteor's explosion 
+          if(wave > 1 && additionalEnemy.status && meteorExplosionTouchingAdditionalEnemy(i)){
+            additionalEnemy.status = false;//Additional enemy state set to false as it has been exploded
+            additionalEnemy.exploding = true;//Additional enemy explosion state activated
+            score += (100 * scoreMultiplier());
+            additionalEnemyExploded.play();
+            additionalEnemyExploded.rewind();
           }
           
           meteorExplosions[i]+=2;
       }else{
-        meteors[i].exploding = false;
+        meteors[i].exploding = false;//Explosion is finished and explosion state is ended
       }
        
     }  
   }
 }
-  
+
+/**
+* Check to see if another meteor is within the meteor's explosion
+*
+* @param i an integer for the index of the meteor being checked
+* @param j an integer for the index of the meteor which explosion is being checked against the meteor for a collision
+* @return Boolean that represents whether there is a collision occuring
+*/
 boolean explosionTouchingMeteors(int j, int i){
  if((meteors[j].position.x <= meteors[i].position.x + meteorExplosions[i]) && (meteors[j].position.x >= meteors[i].position.x - meteorExplosions[i])){
    if((meteors[j].position.y <= meteors[i].position.y + meteorExplosions[i]) && (meteors[j].position.y >= meteors[i].position.y - meteorExplosions[i])){
@@ -85,8 +112,8 @@ boolean explosionTouchingMeteors(int j, int i){
 }
 
 boolean explosionTouchingMeteors(int j){
- if((meteors[j].position.x <= additionalEnemy.position.x + additionalEnemy.explodingCounter) && (meteors[j].position.x >= additionalEnemy.position.x - additionalEnemy.explodingCounter)){
-   if((meteors[j].position.y <= additionalEnemy.position.y + additionalEnemy.explodingCounter) && (meteors[j].position.y >= additionalEnemy.position.y - additionalEnemy.explodingCounter)){
+ if((meteors[j].position.x <= additionalEnemy.position.x + additionalEnemy.explodingCounter - 20) && (meteors[j].position.x >= additionalEnemy.position.x - additionalEnemy.explodingCounter + 20)){
+   if((meteors[j].position.y <= additionalEnemy.position.y + additionalEnemy.explodingCounter - 20) && (meteors[j].position.y >= additionalEnemy.position.y - additionalEnemy.explodingCounter + 20)){
      return true;
    }
  }
@@ -105,6 +132,7 @@ void split(){
             meteors[j] = new Meteor(meteors[i].position.x, meteors[i].position.y, random(0, 3), 1, 1, terminalVelocity);
             meteorState[j] = true;
             meteorExplosions[j] = 1;
+            counter++;
          }
          if(counter == 3){
            break;

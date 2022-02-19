@@ -15,46 +15,55 @@ void waveStatusCheck() {
     int bombCount = 0;
     int multiplier = scoreMultiplier();
     
+    //Check to see how many cities are alive (cityState[i] == true) at the end of the round
     for(int i=0;i<cityState.length;i++){
       if(cityState[i])
         aliveCityCount++;
     }
     
+    //Check to see how many bombs were left unused at the end of the round
     for(int i=0;i<ballistae.length;i++){
       if(ballistaState[i])
         bombCount += ballistae[i].bombCounter;
     }
-        
+    
+    //Score is updated accordingly for the cities alive and bombs unused
     score+= aliveCityCount * (100 * multiplier);
     score+= bombCount * (5 * multiplier);
     
+    //Check to see if city revival score threshold has been reached 
     if(score >= 10000){
       for(int i=0; i<cityState.length; i++)
-        if(cityState[i] == false){
-          cityState[i] = true;
-          score-=10000;
-          citiesRevived++;
-          cityRevived = true;
-          time = millis();
+        if(cityState[i] == false){//Check to see if there's a city to revive 
+          cityState[i] = true;//City revived
+          score-=10000;//'Active' score reduced by 10,000 to stop duplicate revivals
+          citiesRevived++;//Number of cities revived incremented for total score purposes
+          cityRevived = true;//Boolean that tracks if city has been recently revived set to true
+          time = millis();//Time of city's revival stored
           return;
         }
     }
     
-    enemyCount=0;
-    addMeteors();
+    addMeteors();//Next wave of meteor's created
     
+    //Ballistae reset to start of round values
     for (int i=0; i<ballistae.length; i++) {
       ballistaState[i] = true;
       ballistae[i].bombCounter = 10;
     }
+    //Total bomb count and number of bombs in play reset to start of round values
     bombCount = 30;
     bombsInPlay = 0;
+    //Bomb statuses and explosion sizes reset to start of round values
     for (int i=0; i < explosions.length; i++) {
       bombs[i] = null;
       explosions[i] = 1;
     }
     
+    //Round is lost
   }else if(s == state.lost){
+    gameOver.play();
+    gameOver.rewind();
     fill(240, 196, 32);
     textAlign(CENTER);
     
@@ -68,11 +77,15 @@ void waveStatusCheck() {
     textSize(12);
     text("Press 0 to play again", width/2, (height/2)+30);
     text("Press 1 to return to the main menu", width/2, (height/2)+50);
+    text("Press 2 to view the high score table", width/2, (height/2)+50);
     
+    //Check to see user input to send user to correct screen, including restarting the game
     if(keyPressed == true &&  key == '0'){
        reset();
     }else if(keyPressed == true && key == '1'){
        screenView = menuScreen; 
+    }else if(keyPressed == true && key == '2'){
+       screenView = hstScreen; 
     }
     
   }

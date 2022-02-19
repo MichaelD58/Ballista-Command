@@ -50,10 +50,13 @@ class Ballista{
     return true;
   }
   
+  /**
+  * Checks to see if the ballitsa can produce any more bombs. If so, a new bomb is produced
+  */
   void createBomb(float x, float y, float vel1, float vel2, int invMass){
-    if(bombCounter>0){
-      bomb = new Bomb(x, y, vel1, vel2, invMass);
-      bombCounter--;
+    if(bombCounter>0){//If there are bombs still to fire for this ballista
+      bomb = new Bomb(x, y, vel1, vel2, invMass);//Bomb is initialised
+      bombCounter--;//Bombs remaining is reduced
     }
   }
   

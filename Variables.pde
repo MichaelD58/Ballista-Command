@@ -1,5 +1,6 @@
 final int menuScreen = 0,
   gameScreen = 1,
+  hstScreen = 2,
   cityReviveCost = 10000;
 
 int screenView = menuScreen,//Used to track the current screen the game is viewing
@@ -9,7 +10,7 @@ int screenView = menuScreen,//Used to track the current screen the game is viewi
   bombsInPlay,//Bombs currently in flight
   citiesRevived, //Number of cities revived in a game
   time,//Time at which a city is revived at
-  explosions[],
+  explosions[],//Size of explosions for each bomb
   meteorExplosions[];
 
 //State arrays used to store if the objects in the names are alive or dead (true or false)
@@ -24,7 +25,7 @@ Ballista ballistae[];//Array storing each ballistae
 
 Meteor meteors[];//Array storing the meteors in a wave
 
-Bomb bombs[];
+Bomb bombs[];//Array storing the bombs for a wave
 
 PFont atari;//Font used for the game
 
@@ -39,3 +40,13 @@ enum state {//Three possible states for a wave
 }
 
 AdditionalEnemy additionalEnemy;
+
+import ddf.minim.*;
+
+Minim minim;
+AudioPlayer bombFired;
+AudioPlayer meteorExploded;
+AudioPlayer additionalEnemyExploded;
+AudioPlayer bombExploded;
+AudioPlayer gameStart;
+AudioPlayer gameOver;

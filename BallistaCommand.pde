@@ -2,9 +2,20 @@ void setup() {
   frameRate(30);
   size(1000, 700);
   noCursor(); //Dont want the cursor appearing when playing the game
+  
+  minim = new Minim(this);
+  gameStart = minim.loadFile("Audio/gameStart.mp3");
+  gameOver = minim.loadFile("Audio/gameOver.mp3");
+  bombFired = minim.loadFile("Audio/bombFired.mp3");
+  bombExploded = minim.loadFile("Audio/bombExploded.mp3");
+  meteorExploded = minim.loadFile("Audio/meteor.mp3");
+  additionalEnemyExploded = minim.loadFile("Audio/ae.mp3");
+  
   reset();//Calls the reset function which initialises many of the game's variables as well as begins the game
+  gameStart.play();
+  gameStart.rewind();
 }
-
+//Stuffs\Uni\CS4303\BallistaCommand\BallistaCommand\Audio\bomb.ogg
 /**
 * Method to initialise many of the game's variable
 */
@@ -13,7 +24,7 @@ void reset() {
   wave = 0;
   enemyCount = 0;//Numbers of meteors in play
   gravityMain = new PVector(0, height/18000000f);////Value used for the constant of gravity
-  bombsInPlay = 0;
+  bombsInPlay = 0;//Number of bombs used in  a round
   
   //Array of bombs is initialised along with the array used to store the explosion size of each bomb
   bombs = new Bomb[30];
@@ -79,8 +90,8 @@ void draw() {
     text("Meteors left:"+ enemyCount, width-290, 25);//Meteors left in wave
 
     waveStatusCheck();//Check to see what the current state of the wave is
-    bombMovement();
-    bombSetOffCheck();
+    bombMovement();//Continually updates the bomb's visual representation and vectors
+    bombSetOffCheck();//Continually checking to see if the bombs in flight have been set off, handling those that have
     explodeMeteorCheck();
     
     
@@ -103,9 +114,11 @@ void draw() {
       if(enemyCount == 0){
         addAdditionalEnemy(); 
       }
-      additionalEnemyMovement();
+      if(additionalEnemy.status){
+        additionalEnemyMovement();
+        additionalEnemyFireMeteor();
+      }
       explodeAdditionalEnemyCheck();
-      additionalEnemyFireMeteor();
       split();
     }
     
@@ -124,10 +137,34 @@ void draw() {
   
     textSize(18);
     text("0. Play Game", width/2, 270);
+    
+    textSize(18);
+    text("1. View High Score Table", width/2, 300);
 
     //Check(s) for user input for menu interaction
     if(keyPressed==true &&  key == '0') {
       screenView = gameScreen;
+    }else if(keyPressed == true && key == '1'){
+       screenView = hstScreen; 
+    }
+  }
+  
+  //Check to see if the high score screen is to be shown
+  if (screenView == hstScreen) {
+    background(0);
+    textSize(40);
+    textAlign(CENTER);
+    
+    fill(240, 196, 32);
+    text("Ballista Command", width/2, 100);
+  
+    textSize(18);
+    text("0. Return to main menu", width/2, 140);
+    
+
+    //Check(s) for user input for menu interaction
+    if(keyPressed==true &&  key == '0') {
+      screenView = menuScreen;
     }
   }
 }

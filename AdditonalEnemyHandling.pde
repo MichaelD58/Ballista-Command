@@ -25,17 +25,17 @@ void additionalEnemyMovement(){
   additionalEnemy.draw();
 }
 
-boolean explosionTouchingAdditionalEnemy(int i) {
+boolean bombExplosionTouchingAdditionalEnemy(int i) {
   if(additionalEnemy.type == 1){
-    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]) && (additionalEnemy.position.x >= bombs[i].position.x - explosions[i])) {
-      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i]) && (additionalEnemy.position.y >= bombs[i].position.y - explosions[i])) {
+    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i] - 20) && (additionalEnemy.position.x >= bombs[i].position.x - explosions[i] + 20)) {
+      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i]- 20) && (additionalEnemy.position.y >= bombs[i].position.y - explosions[i] + 20)) {
         additionalEnemy.status = false;
         return true;
       }
     }
   }else{
-    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i]) && (additionalEnemy.position.x + 50 >= bombs[i].position.x - explosions[i])) {
-      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i]) && (additionalEnemy.position.y + 20 >= bombs[i].position.y - explosions[i])) {
+    if ((additionalEnemy.position.x <= bombs[i].position.x + explosions[i] - 20) && (additionalEnemy.position.x + 50 >= bombs[i].position.x - explosions[i] + 20)) {
+      if ((additionalEnemy.position.y <= bombs[i].position.y + explosions[i] -20) && (additionalEnemy.position.y + 20 >= bombs[i].position.y - explosions[i] + 20)) {
         additionalEnemy.status = false;
         return true;
       }
@@ -43,6 +43,27 @@ boolean explosionTouchingAdditionalEnemy(int i) {
   }
   return false;
 }
+
+boolean meteorExplosionTouchingAdditionalEnemy(int i) {
+  println(i);
+  if(additionalEnemy.type == 1){
+    if ((additionalEnemy.position.x <= meteors[i].position.x + explosions[i] - 20) && (additionalEnemy.position.x >= meteors[i].position.x - explosions[i] + 20)) {
+      if ((additionalEnemy.position.y <= meteors[i].position.y + explosions[i]- 20) && (additionalEnemy.position.y >= meteors[i].position.y - explosions[i] + 20)) {
+        additionalEnemy.status = false;
+        return true;
+      }
+    }
+  }else{
+    if ((additionalEnemy.position.x <= meteors[i].position.x + explosions[i] - 20) && (additionalEnemy.position.x + 50 >= meteors[i].position.x - explosions[i] + 20)) {
+      if ((additionalEnemy.position.y <= meteors[i].position.y + explosions[i] -20) && (additionalEnemy.position.y + 20 >= meteors[i].position.y - explosions[i] + 20)) {
+        additionalEnemy.status = false;
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 
 void explodeAdditionalEnemyCheck(){
     if(additionalEnemy.exploding){
@@ -72,7 +93,6 @@ void explodeAdditionalEnemyCheck(){
 }
 
 void additionalEnemyFireMeteor(){ 
-  if(additionalEnemy.status){
     for(int i = 0; i< additionalEnemy.fireAtX.length; i++){
       if(additionalEnemy.position.x == additionalEnemy.fireAtX[i]){
         for(int j = 0; j < meteorState.length; j++){
@@ -84,6 +104,5 @@ void additionalEnemyFireMeteor(){
           }
         }
       }
-    }
-  } 
+    } 
 }
