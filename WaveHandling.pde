@@ -84,8 +84,6 @@ void waveStatusCheck() {
        reset();
     }else if(keyPressed == true && key == '1'){
        screenView = menuScreen; 
-    }else if(keyPressed == true && key == '2'){
-       screenView = hstScreen; 
     }
     
   }

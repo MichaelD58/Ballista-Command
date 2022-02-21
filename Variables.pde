@@ -1,6 +1,5 @@
 final int menuScreen = 0,
   gameScreen = 1,
-  hstScreen = 2,
   cityReviveCost = 10000;
 
 int screenView = menuScreen,//Used to track the current screen the game is viewing
@@ -39,7 +38,7 @@ enum state {//Three possible states for a wave
   lost
 }
 
-AdditionalEnemy additionalEnemy;
+AdditionalEnemy additionalEnemy;//Instance of the bomber or satellite
 
 import ddf.minim.*;
 

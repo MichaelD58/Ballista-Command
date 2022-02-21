@@ -3,6 +3,7 @@ void setup() {
   size(1000, 700);
   noCursor(); //Dont want the cursor appearing when playing the game
   
+  //All music files are loaded in
   minim = new Minim(this);
   gameStart = minim.loadFile("Audio/gameStart.mp3");
   gameOver = minim.loadFile("Audio/gameOver.mp3");
@@ -12,6 +13,7 @@ void setup() {
   additionalEnemyExploded = minim.loadFile("Audio/ae.mp3");
   
   reset();//Calls the reset function which initialises many of the game's variables as well as begins the game
+  //Game start up music
   gameStart.play();
   gameStart.rewind();
 }
@@ -92,7 +94,7 @@ void draw() {
     waveStatusCheck();//Check to see what the current state of the wave is
     bombMovement();//Continually updates the bomb's visual representation and vectors
     bombSetOffCheck();//Continually checking to see if the bombs in flight have been set off, handling those that have
-    explodeMeteorCheck();
+    explodeMeteorCheck();//Comtninually checking if a metoeor should explode or continue to explode
     
     
     textAlign(CENTER);
@@ -110,16 +112,17 @@ void draw() {
       }
     }
     
+    //Check to see if wave is suitable for additional enemies and splitting bombs
     if(wave > 1){
-      if(enemyCount == 0){
-        addAdditionalEnemy(); 
+      if(enemyCount == 0){//If round start
+        addAdditionalEnemy(); //Spawn additional enemy
       }
       if(additionalEnemy.status){
-        additionalEnemyMovement();
-        additionalEnemyFireMeteor();
+        additionalEnemyMovement();//Continually manage the movement of the additional enemy
+        additionalEnemyFireMeteor();//Continually check if the additional enemy can fire a meteor
       }
-      explodeAdditionalEnemyCheck();
-      split();
+      explodeAdditionalEnemyCheck();//Continually check if the additional enemy is to explode or continue exploding
+      split();//Continually check to see if a bomb is able to split
     }
     
     enemyCount = 0;//Active meteor count is set back to 0 so that it can be refreshed with each frame
@@ -137,34 +140,10 @@ void draw() {
   
     textSize(18);
     text("0. Play Game", width/2, 270);
-    
-    textSize(18);
-    text("1. View High Score Table", width/2, 300);
 
     //Check(s) for user input for menu interaction
     if(keyPressed==true &&  key == '0') {
       screenView = gameScreen;
-    }else if(keyPressed == true && key == '1'){
-       screenView = hstScreen; 
-    }
-  }
-  
-  //Check to see if the high score screen is to be shown
-  if (screenView == hstScreen) {
-    background(0);
-    textSize(40);
-    textAlign(CENTER);
-    
-    fill(240, 196, 32);
-    text("Ballista Command", width/2, 100);
-  
-    textSize(18);
-    text("0. Return to main menu", width/2, 140);
-    
-
-    //Check(s) for user input for menu interaction
-    if(keyPressed==true &&  key == '0') {
-      screenView = menuScreen;
     }
   }
 }

@@ -9,6 +9,7 @@
 void fireBomb(int x, int y, int chosenBallista) {
   ballistae[chosenBallista].createBomb((ballistae[chosenBallista].x2 + ballistae[chosenBallista].x3)/2, ballistae[chosenBallista].y1, (float)((x - ballistae[chosenBallista].x1)/130), (float)-y/120, 1);
   bombs[bombsInPlay++] = ballistae[chosenBallista].bomb;
+  //Bomb fired sound
   bombFired.play();
   bombFired.rewind();
 }
@@ -82,6 +83,7 @@ void explode(int i) {
         meteorState[j] = false;//Meteor state set to false as it has been exploded
         meteors[j].exploding = true;//Meteor explosion state activated
         score += (25 * scoreMultiplier());
+        //Meteor explosion sound
         meteorExploded.play();
         meteorExploded.rewind();
       }
@@ -92,6 +94,7 @@ void explode(int i) {
         additionalEnemy.status = false;//Additional enemy state set to false as it has been exploded
         additionalEnemy.exploding = true;//Additional enemy explosion state activated
         score += (100 * scoreMultiplier());
+        //Addiional enemy explosion sound
         additionalEnemyExploded.play();
         additionalEnemyExploded.rewind();
     }

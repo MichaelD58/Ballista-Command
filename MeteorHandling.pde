@@ -50,12 +50,12 @@ void removeMeteorCheck() {
 }
 
 /**
-  * Check to see if a meteor is still to explode, continuing to draw the growing explosion if so. There is also a series of checks
-  * to see if the meteor's explosion is colliding with both other meteors and the additional enemies. If collisions are detected, then
-  * the thing being collided with is set to explode and the score is increased accordingly
-  *
-  * @param i an integer for the index of the meteor which explosion is being dealt with
-  */
+* Check to see if a meteor is still to explode, continuing to draw the growing explosion if so. There is also a series of checks
+* to see if the meteor's explosion is colliding with both other meteors and the additional enemies. If collisions are detected, then
+* the thing being collided with is set to explode and the score is increased accordingly
+*
+* @param i an integer for the index of the meteor which explosion is being dealt with
+*/
 void explodeMeteorCheck(){
   for(int i = 0; i < meteors.length; i++){
     if(meteors[i].exploding){
@@ -71,6 +71,7 @@ void explodeMeteorCheck(){
               meteorState[j] = false;//Meteor state set to false as it has been exploded
               meteors[j].exploding = true;//Meteor explosion state activated
               score += (25 * scoreMultiplier());
+              //Meteor explosion sound
               meteorExploded.play();
               meteorExploded.rewind();
             }
@@ -81,6 +82,7 @@ void explodeMeteorCheck(){
             additionalEnemy.status = false;//Additional enemy state set to false as it has been exploded
             additionalEnemy.exploding = true;//Additional enemy explosion state activated
             score += (100 * scoreMultiplier());
+            //Additional enemy explosion sound
             additionalEnemyExploded.play();
             additionalEnemyExploded.rewind();
           }
@@ -111,6 +113,12 @@ boolean explosionTouchingMeteors(int j, int i){
  return false;
 }
 
+/**
+* Check to see if the additional enemy is within the meteor's explosion
+*
+* @param j an integer for the index of the meteor which explosion is being checked against the meteor for a collision
+* @return Boolean that represents whether there is a collision occuring
+*/
 boolean explosionTouchingMeteors(int j){
  if((meteors[j].position.x <= additionalEnemy.position.x + additionalEnemy.explodingCounter - 20) && (meteors[j].position.x >= additionalEnemy.position.x - additionalEnemy.explodingCounter + 20)){
    if((meteors[j].position.y <= additionalEnemy.position.y + additionalEnemy.explodingCounter - 20) && (meteors[j].position.y >= additionalEnemy.position.y - additionalEnemy.explodingCounter + 20)){
@@ -121,20 +129,24 @@ boolean explosionTouchingMeteors(int j){
  return false;
 }
 
+/**
+* Check to see if a meteor is able to split and if so, it is at the position that it can split at. Then checks to see if there are meteors
+* that can be initialised againm that will appear again in the 'split'
+*/
 void split(){ 
   int counter = 0;
       
    for(int i = 0; i< meteors.length; i++){
-     if(meteorState[i] && meteors[i].split == 1 && ((int)meteors[i].position.y == meteors[i].splitY)){
+     if(meteorState[i] && meteors[i].split == 1 && ((int)meteors[i].position.y == meteors[i].splitY)){//Check to see if the meteor can split and is at the right position
        for(int j = 0; j < meteorState.length; j++){
-         if(!meteorState[j]){
-            meteorState[i] = false;
+         if(!meteorState[j]){//Meteor can be initialised again
             meteors[j] = new Meteor(meteors[i].position.x, meteors[i].position.y, random(0, 3), 1, 1, terminalVelocity);
             meteorState[j] = true;
             meteorExplosions[j] = 1;
             counter++;
          }
-         if(counter == 3){
+         //Max splitting has been reached
+         if(counter == 2){
            break;
          }
        }
